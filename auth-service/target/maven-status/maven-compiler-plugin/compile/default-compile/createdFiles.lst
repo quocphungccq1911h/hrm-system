@@ -1,0 +1,7 @@
+com\hrm\auth\model\UserDO.class
+com\hrm\auth\mapper\RoleDOMapper.class
+com\hrm\auth\mapper\UserDOMapper.class
+com\hrm\auth\mapper\UserRoleDOMapper.class
+com\hrm\auth\AuthServiceApplication.class
+com\hrm\auth\model\UserRoleDO.class
+com\hrm\auth\model\RoleDO.class
