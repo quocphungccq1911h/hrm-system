@@ -11,4 +11,11 @@
         from users
         where username = #{username, jdbcType=VARCHAR}
     </select>
+
+    <select id="findById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM users
+        WHERE id = #{id}
+    </select>
 </mapper>
