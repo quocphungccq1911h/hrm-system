@@ -2,8 +2,10 @@ package com.hrm.auth.controller;
 
 import com.hrm.auth.dto.AuthResponse;
 import com.hrm.auth.dto.LoginRequest;
+import com.hrm.auth.dto.RefreshTokenRequest;
 import com.hrm.auth.model.User;
 import com.hrm.auth.service.AuthService;
+import com.hrm.auth.service.RefreshTokenService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthService authService;
+    private final RefreshTokenService refreshTokenService;
 
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(@Valid @RequestBody User user) {
@@ -36,5 +39,11 @@ public class AuthController {
         AuthResponse response = authService.authenticate(request);
         return ResponseEntity.ok(response);
     }
-    // TODO: Triển khai endpoint /api/v1/auth/refresh (dùng refresh token)
+
+    @PostMapping("/refresh")
+    public ResponseEntity<AuthResponse> refresh(@Valid @RequestBody RefreshTokenRequest request) {
+        // Gọi dịch vụ để xác thực refresh token và trả về cặp token mới
+        AuthResponse response = refreshTokenService.refreshAccessToken(request.getRefreshToken());
+        return ResponseEntity.ok(response);
+    }
 }

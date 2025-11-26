@@ -1,6 +1,5 @@
 package com.hrm.auth.service;
 
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.hrm.auth.dto.AuthResponse;
 import com.hrm.auth.dto.LoginRequest;
 import com.hrm.auth.mapper.UserMapper;
@@ -15,7 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
