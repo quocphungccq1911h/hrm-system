@@ -51,3 +51,5 @@ Thumbs.db
 # Java dependencies
 lib/
 app/starter/src/main/resources/application.yml
+auth-service/src/main/resources/application.yml
+auth-service/src/main/resources/generatorConfig.xml
