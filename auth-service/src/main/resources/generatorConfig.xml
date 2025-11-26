@@ -30,7 +30,12 @@
 
         <table tableName="users" domainObjectName="User" enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByPrimaryKeyQueryId="false">
+
             <generatedKey column="id" sqlStatement="SELECT gen_random_uuid()" identity="false"/>
+
+            <columnOverride column="id" javaType="java.util.UUID" jdbcType="OTHER" />
+
+            <columnOverride column="is_active" javaType="java.lang.Boolean" jdbcType="BOOLEAN" />
         </table>
 
         <table tableName="roles" domainObjectName="Role" enableCountByExample="false" enableUpdateByExample="false"

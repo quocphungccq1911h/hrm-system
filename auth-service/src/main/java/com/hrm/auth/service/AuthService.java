@@ -1,5 +1,6 @@
 package com.hrm.auth.service;
 
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.hrm.auth.dto.AuthResponse;
 import com.hrm.auth.dto.LoginRequest;
 import com.hrm.auth.mapper.UserMapper;
@@ -13,21 +14,30 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
+
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
 
     public User registerNewUser(User user) {
-        // 🔒 Mã hóa mật khẩu trước khi lưu vào DB
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
+        try {
+            // 🔒 Mã hóa mật khẩu trước khi lưu vào DB
+            String encodedPassword = passwordEncoder.encode(user.getPassword());
+            user.setPassword(encodedPassword);
+            user.setCreatedAt(new Date());
 
-        userMapper.insert(user);
-        return user;
+            userMapper.insert(user);
+            return user;
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 
     public AuthResponse authenticate(LoginRequest request) {
@@ -39,7 +49,19 @@ public class AuthService {
         AuthUserDetails userDetails = (AuthUserDetails) authentication.getPrincipal();
 
         // 🔑 Bước 3: Tạo JWT Access Token
-        String accessToken =
+        String accessToken = jwtUtil.generateToken(userDetails);
+
+        // 🔑 Bước 4: Tạo Refresh Token (Tạm thời chỉ trả về rỗng, logic lưu Redis sẽ làm sau)
+        String refreshToken = "REFRESH_" + userDetails.getUserId();
+
+        // 🔑 Bước 5: Trả về DTO Response
+        return AuthResponse.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .employeeId(userDetails.getEmployeeId())
+                // TODO: Dùng giá trị expiresIn từ JwtUtil (cần triển khai getter trong JwtUtil)
+                .expiresIn(3600L)
+                .build();
     }
 
 

@@ -6,9 +6,9 @@ spring:
     name: auth-service
   # Cấu hình kết nối PostgreSQL (auth_db)
   datasource:
-    url: jdbc:postgresql://hrm-postgres:5432/auth_db # Sử dụng service name của Docker
+    url: jdbc:postgresql://localhost:5432/auth_db # Sử dụng service name của Docker
     username: postgres
-    password: password
+    password: QuocPhung1994@
     driver-class-name: org.postgresql.Driver
   # Cấu hình JPA/Hibernate
   jpa:
@@ -21,5 +21,15 @@ spring:
       host: hrm-redis # Sử dụng service name của Docker
       port: 6379
 
-  mybatis:
-    mapper-locations: classpath:mapper/*.xml
+mybatis:
+  mapper-locations: classpath*:mapper/**/*.xml
+  type-aliases-package: com.hrm.auth.model
+  type-handlers-package: com.hrm.auth.typehandler
+
+jwt:
+  secret: superSecretKey123456789
+  expiration: 3600000
+
+logging:
+  level:
+    org.mybatis: DEBUG
