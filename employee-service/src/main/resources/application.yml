@@ -1,0 +1,23 @@
+server:
+  port: 8082 # Cổng cần khác với Auth Service (ví dụ: 8080)
+
+spring:
+  application:
+    name: employee-service # Tên service đăng ký trong Service Registry
+  datasource:
+    url: jdbc:postgresql://localhost:5432/employee_db # Sử dụng service name của Docker
+    username: postgres
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update # Tự động tạo/cập nhật bảng
+    show-sql: true
+  data:
+    redis:
+      host: hrm-redis # Sử dụng service name của Docker
+      port: 6379
+
+mybatis:
+  mapper-locations: classpath*:mapper/**/*.xml
+  type-aliases-package: com.hrm.employee.model
+  type-handlers-package: com.hrm.employee.typehandler

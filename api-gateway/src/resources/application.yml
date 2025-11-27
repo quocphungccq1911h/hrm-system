@@ -8,14 +8,15 @@ spring:
     gateway:
       routes:
         # Ví dụ cấu hình route cho Auth Service (sẽ code sau)
-        - id: auth-service
+        - id: auth_route
           uri: http://localhost:8081 # Tạm thời hardcode, sau dùng Eureka lb://auth-service
           predicates:
             - Path=/api/v1/auth/**
-        - id: hr_service
-          uri: lb://HR-SERVICE
+            -
+        - id: employee_route
+          uri: lb://EMPLOYEE-SERVICE
           predicates:
-            - Path=/api/v1/hr/**
+            - Path=/api/v1/employees/**
           filters:
             - name: JwtAuthenticationFilter # ✅ Áp dụng Filter cho HR Service
         # Route cho Auth Service (không cần áp dụng JWT Filter vì nó xử lý Login/Register)
