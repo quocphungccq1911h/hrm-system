@@ -1,0 +1,15 @@
+server:
+  port: 8083 # Cổng cần khác với Auth (8080) và Employee (8081)
+
+spring:
+  application:
+    name: attendance-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/attendance_db # CSDL riêng
+    username: postgres
+    password:
+
+# Cấu hình MyBatis
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.hrm.attendance.model
