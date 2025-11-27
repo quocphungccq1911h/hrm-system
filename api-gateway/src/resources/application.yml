@@ -12,3 +12,18 @@ spring:
           uri: http://localhost:8081 # Tạm thời hardcode, sau dùng Eureka lb://auth-service
           predicates:
             - Path=/api/v1/auth/**
+        - id: hr_service
+          uri: lb://HR-SERVICE
+          predicates:
+            - Path=/api/v1/hr/**
+          filters:
+            - name: JwtAuthenticationFilter # ✅ Áp dụng Filter cho HR Service
+        # Route cho Auth Service (không cần áp dụng JWT Filter vì nó xử lý Login/Register)
+        - id: auth_service
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/api/v1/auth/**
+
+jwt:
+  secret: N2RvYjMybGtzajlkM2pzazhsajM5c2xrMzlqc2xrMzlsag==
+  expiration: 3600000
