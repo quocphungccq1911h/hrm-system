@@ -1,6 +1,7 @@
 package com.hrm.employee.service;
 
 import com.hrm.employee.mapper.EmployeeMapper;
+import com.hrm.employee.mapper.ext.ExtEmployeeMapper;
 import com.hrm.employee.model.Employee;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class EmployeeService {
     private final EmployeeMapper employeeMapper;
+    private final ExtEmployeeMapper extEmployeeMapper;
 
     @Transactional
     public Employee createEmployee(Employee employee) {
@@ -54,6 +56,6 @@ public class EmployeeService {
 
     @Transactional
     public void deactivateEmployee(UUID id) {
-        employeeMapper.deactivate(id);
+        extEmployeeMapper.deactivate(id);
     }
 }
